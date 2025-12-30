@@ -3,15 +3,21 @@ const cors = require('cors');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const TurndownService = require('turndown');
+const path = require('path');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
 const turndownService = new TurndownService();
+
+// Root route to serve index.html
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 app.post('/scrape', async (req, res) => {
   const { url, extractionType = 'markdown' } = req.body;
