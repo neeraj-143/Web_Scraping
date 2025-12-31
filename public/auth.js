@@ -2,12 +2,18 @@
 async function checkAuth() {
   const { data: { user } } = await supabase.auth.getUser();
   
-  if (user && (window.location.pathname.includes('login.html') || window.location.pathname.includes('signup.html'))) {
-    window.location.href = 'index.html';
+  // If logged in and on login/signup page, redirect to dashboard
+  if (user && (window.location.pathname.includes('index.html') || window.location.pathname === '/' || window.location.pathname.includes('signup'))) {
+    if (!window.location.pathname.includes('dashboard')) {
+      window.location.href = 'dashboard.html';
+      return;
+    }
   }
-  
-  if (!user && window.location.pathname.includes('index.html')) {
-    window.location.href = 'login.html';
+
+  // If not logged in and on dashboard, redirect to login
+  if (!user && window.location.pathname.includes('dashboard')) {
+    window.location.href = 'index.html';
+    return;
   }
   
   return user;
@@ -41,7 +47,7 @@ if (document.getElementById('loginForm')) {
       successDiv.style.display = 'block';
       
       setTimeout(() => {
-        window.location.href = 'index.html';
+        window.location.href = 'dashboard.html';
       }, 1000);
       
     } catch (error) {
@@ -89,7 +95,7 @@ if (document.getElementById('signupForm')) {
       successDiv.style.display = 'block';
       
       setTimeout(() => {
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
       }, 2000);
       
     } catch (error) {
@@ -106,7 +112,7 @@ async function logout() {
   try {
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
-    window.location.href = 'login.html';
+    window.location.href = 'index.html';
   } catch (error) {
     console.error('Logout error:', error);
     alert('Error logging out. Please try again.');

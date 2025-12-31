@@ -3,72 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🔥 Web Scraper - Dashboard</title>
+  <title>Login - Web Scraper</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Navigation Bar -->
-  <div class="navbar">
-    <h2>🔥 Web Scraper</h2>
-    <div class="user-info">
-      <span id="userEmail">Loading...</span>
-      <button id="logoutBtn" onclick="logout()">Logout</button>
-    </div>
-  </div>
-
-  <div class="container">
-    <!-- Scraper Form -->
-    <div class="card">
-      <h1>🔥 Web Scraper Engine</h1>
+  <div class="auth-container">
+    <h1>🔐 Login</h1>
+    <div id="error" class="error"></div>
+    <div id="success" class="success"></div>
+    
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" required placeholder="your@email.com">
+      </div>
       
       <div class="form-group">
-        <label for="url">🔗 Website URL</label>
-        <input 
-          type="url" 
-          id="url" 
-          placeholder="https://example.com" 
-          required
-        >
+        <label for="password">Password</label>
+        <input type="password" id="password" required placeholder="••••••••" minlength="6">
       </div>
-
-      <div class="form-group">
-        <label for="maxDepth">📊 Maximum Depth</label>
-        <input 
-          type="number" 
-          id="maxDepth" 
-          value="1" 
-          min="1" 
-          max="5"
-        >
-      </div>
-
-      <div class="form-group">
-        <label for="format">📄 Output Format</label>
-        <select id="format">
-          <option value="markdown">Markdown</option>
-          <option value="json">JSON</option>
-          <option value="html">HTML</option>
-        </select>
-      </div>
-
-      <button id="scrapeBtn">Scrape Now</button>
-
-      <div id="result"></div>
-    </div>
-
-    <!-- Scraping History -->
-    <div class="card">
-      <h2 style="color: #667eea; margin-bottom: 20px;">📚 Scraping History</h2>
-      <div id="history">
-        <div class="loading">Loading history...</div>
-      </div>
+      
+      <button type="submit" id="loginBtn">Login</button>
+    </form>
+    
+    <div class="link">
+      Don't have an account? <a href="signup.html">Sign Up</a>
     </div>
   </div>
 
-  <!-- Scripts - Load in correct order -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <script src="auth.js"></script>
-  <script src="script.js"></script>
 </body>
 </html>
