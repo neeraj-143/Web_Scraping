@@ -6,6 +6,10 @@ async function checkAuth() {
     window.location.href = 'index.html';
   }
   
+  if (!user && window.location.pathname.includes('index.html')) {
+    window.location.href = 'login.html';
+  }
+  
   return user;
 }
 
@@ -99,8 +103,14 @@ if (document.getElementById('signupForm')) {
 
 // Logout Function
 async function logout() {
-  await supabase.auth.signOut();
-  window.location.href = 'login.html';
+  try {
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
+    window.location.href = 'login.html';
+  } catch (error) {
+    console.error('Logout error:', error);
+    alert('Error logging out. Please try again.');
+  }
 }
 
 // Check authentication on page load
